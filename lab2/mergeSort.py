@@ -87,7 +87,7 @@ if __name__ == '__main__':
 	plt.grid(True)
 
 	# Save the plot as an image file
-	plt.savefig('sorting_times_mergesort.png')
+	plt.savefig('mergesort_times.png')
 
 	# Close the plot to avoid displaying it interactively
 	plt.close()

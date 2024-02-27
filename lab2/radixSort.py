@@ -2,34 +2,36 @@ import time
 import matplotlib.pyplot as plt
 
 
-# To heapify subtree rooted at index i.
-# n is size of heap
-def heapify(arr, N, i):
-    largest = i
-    l = 2 * i + 1
-    r = 2 * i + 2
+def countingSort(arr, exp1):
+    n = len(arr)
+    output = [0] * n
+    count = [0] * 10
 
-    if l < N and arr[largest] < arr[l]:
-        largest = l
+    for i in range(0, n):
+        index = arr[i] // exp1
+        count[index % 10] += 1
 
-    if r < N and arr[largest] < arr[r]:
-        largest = r
+    for i in range(1, 10):
+        count[i] += count[i - 1]
 
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]  # swap
-        heapify(arr, N, largest)
+    i = n - 1
+    while i >= 0:
+        index = arr[i] // exp1
+        output[count[index % 10] - 1] = arr[i]
+        count[index % 10] -= 1
+        i -= 1
+
+    for i in range(0, len(arr)):
+        arr[i] = output[i]
 
 
-# The main function to sort an array of given size
-def heapSort(arr):
-    N = len(arr)
-
-    for i in range(N // 2 - 1, -1, -1):
-        heapify(arr, N, i)
-
-    for i in range(N - 1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]  # swap
-        heapify(arr, i, 0)
+# Method to do Radix Sort
+def radixSort(arr):
+    max1 = max(arr)
+    exp = 1
+    while max1 / exp >= 1:
+        countingSort(arr, exp)
+        exp *= 10
 
 
 # Function to read arrays from a file
@@ -52,9 +54,8 @@ if __name__ == '__main__':
 
     # Sort each array and store the time taken
     for i, arr in enumerate(arrays):
-
         start_time = time.time()
-        heapSort(arr)
+        radixSort(arr)
         end_time = time.time()
 
         time_taken = end_time - start_time
@@ -65,12 +66,12 @@ if __name__ == '__main__':
     plt.plot(range(1, len(arrays) + 1), array_times, marker='o')
     plt.xlabel('Array Number')
     plt.ylabel('Time Taken (seconds)')
-    plt.title('Time Taken to Sort Each Array using Heapsort')
+    plt.title('Time Taken to Sort Each Array using Radix Sort')
     plt.xticks(range(1, len(arrays) + 1))
     plt.grid(True)
 
     # Save the plot as an image file
-    plt.savefig('heapsort_times.png')
+    plt.savefig('radixsort_times.png')
 
     # Close the plot to avoid displaying it interactively
     plt.close()
