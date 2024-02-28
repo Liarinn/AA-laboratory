@@ -1,6 +1,6 @@
 import time
+import random_lists_generator as rl
 import matplotlib.pyplot as plt
-
 
 # To heapify subtree rooted at index i.
 # n is size of heap
@@ -32,45 +32,30 @@ def heapSort(arr):
         heapify(arr, i, 0)
 
 
-# Function to read arrays from a file
-def readArraysFromFile(filename):
-    arrays = []
-    with open(filename, 'r') as file:
-        for line in file:
-            array = [int(x) for x in line.strip().split()]
-            arrays.append(array)
-    return arrays
+# Lists generated from the separate file
+lists = [rl.List_1, rl.List_2, rl.List_3, rl.List_4, rl.List_5, rl.List_6, rl.List_7, rl.List_8, rl.List_9, rl.List_10,rl.List_11,rl.List_12]
+
+# Lists to store the time taken for each array
+array_times = []
+
+# Sort each array and store the time taken
+for i, arr in enumerate(lists):
+    start_time = time.time()
+    heapSort(arr)
+    end_time = time.time()
+    time_taken = end_time - start_time
+    array_times.append(time_taken)
+
+# Plotting the graph
+plt.plot(range(1, len(lists) + 1), array_times, marker='o')
+plt.xlabel('Array Number')
+plt.ylabel('Time Taken (seconds)')
+plt.title('Time Taken to Sort Each Array using Heapsort')
+plt.xticks(range(1, len(lists) + 1))
+plt.grid(True)
 
 
-# Driver code
-if __name__ == '__main__':
-    # Read arrays from the file
-    arrays = readArraysFromFile('arrays.txt')
+# Save the plot as an image file
+plt.savefig('heapsort_times.png')
 
-    # Lists to store the time taken for each array
-    array_times = []
 
-    # Sort each array and store the time taken
-    for i, arr in enumerate(arrays):
-
-        start_time = time.time()
-        heapSort(arr)
-        end_time = time.time()
-
-        time_taken = end_time - start_time
-
-        array_times.append(time_taken)
-
-    # Plotting the graph
-    plt.plot(range(1, len(arrays) + 1), array_times, marker='o')
-    plt.xlabel('Array Number')
-    plt.ylabel('Time Taken (seconds)')
-    plt.title('Time Taken to Sort Each Array using Heapsort')
-    plt.xticks(range(1, len(arrays) + 1))
-    plt.grid(True)
-
-    # Save the plot as an image file
-    plt.savefig('heapsort_times.png')
-
-    # Close the plot to avoid displaying it interactively
-    plt.close()
