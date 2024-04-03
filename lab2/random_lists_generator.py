@@ -18,11 +18,11 @@ List_7 = generate_random_list(100, float_numbers=True, range_end=1000)
 List_8 = generate_random_list(100000, float_numbers=True, range_end=100)
 List_9 = generate_random_list(100000, float_numbers=True, range_end=1000000)
 
-#print(List_7)
+
 
 import random
 
-def generate_random_list(length, negative=False, dispersion=100000, range_start=1, range_end=100000, float_numbers=False):
+def generate_random_list(length, negative=False, dispersion=10000, range_start=1, range_end=100000, float_numbers=False):
     if negative:
         return [random.randint(-dispersion, -1) for _ in range(length)]
     else:
@@ -30,5 +30,7 @@ def generate_random_list(length, negative=False, dispersion=100000, range_start=
 
 # Create a list containing only negative numbers
 List_10 = generate_random_list(1000, float_numbers=True, negative=True, range_end=1000)
-List_11 = generate_random_list(1000, negative=True, dispersion=1000)
+List_11 = generate_random_list(100, negative=True, dispersion=1000)
 List_12 = generate_random_list(100000, negative=True, dispersion=1000)
+
+print(List_11)
